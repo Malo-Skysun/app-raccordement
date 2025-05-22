@@ -26,7 +26,7 @@ lat = Coord[0]
 lon = Coord[1]
 
 # Étape 1 : Lecture du fichier Excel
-fichier_excel = r"G:\Drive partagés\Skysun France\03 - Commercial\01 - Projets en cours de vente\Raccordement_Capacites_DAccueil.xlsx"
+fichier_excel = "Raccordement_Capacites_DAccueil.xlsx"
 df = pd.read_excel(fichier_excel)
 
 

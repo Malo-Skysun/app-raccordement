@@ -17,7 +17,7 @@ from streamlit_folium import st_folium
 
 
 
-"""             Début du code             """
+###             Début du code             ###
 
 # Copier coller les coordonnées ici
 Coord = [47.475806275508376, -0.5601572398707153]
@@ -45,7 +45,7 @@ df_coords = pd.DataFrame({
 })
 
 
-"""             Conversion coordonnées WGS84 ==> Lambert 93             """
+###             Conversion coordonnées WGS84 ==> Lambert 93             ###
 
 def wgs84_to_lambert93(lat, lon):
     # Paramètres de l'ellipsoïde GRS80
@@ -130,7 +130,7 @@ for site in résultat:
 
 
 
-"""                Affichage des résultats                """
+###                Affichage des résultats                ###
 Coordonnées_X_Résultat = []
 for i in range(len(résultat)):
     Coordonnées_X_Résultat.append(résultat[i][2])
@@ -184,7 +184,7 @@ plt.show()
 
 
 
-"""             Streamlit             """
+###             Streamlit             ###
 
 import streamlit as st
 import folium

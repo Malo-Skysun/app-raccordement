@@ -1,8 +1,0 @@
-numpy
-matplotlib
-contextily
-folium
-streamlit
-streamlit-folium
-pyproj
-openpyxl

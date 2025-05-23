@@ -5,6 +5,7 @@ Created on Tue May 20 13:33:07 2025
 @author: Skysun
 """
 
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
@@ -20,7 +21,7 @@ from streamlit_folium import st_folium
 ###             Début du code             ###
 
 # Copier coller les coordonnées ici
-Coord = [47.475806275508376, -0.5601572398707153]
+Coord = [46.80093156268336, 4.845329538843441]
 
 lat = Coord[0]
 lon = Coord[1]
@@ -30,12 +31,15 @@ fichier_excel = "Raccordement_Capacites_DAccueil.xlsx"
 df = pd.read_excel(fichier_excel)
 
 
-# Étape 2 : Extraction des coordonnées X/Y (colonnes E et F), capacité immédiatement disponible sans travaux (colonne AB), capacité en travaux (colonne I)
+# Étape 2 : Extraction des données
 nom_poste = df.iloc[:, 1].tolist()  # Colonne B
 coord_x = df.iloc[:, 4].tolist()  # Colonne E (index 4 car on compte à partir de 0)
 coord_y = df.iloc[:, 5].tolist()  # Colonne F (index 5)
 dispo = df.iloc[:, 27].tolist()  # Colonne AB
 travaux = df.iloc[:, 8].tolist()  # Colonne I
+capacité_de_transfo_dispo = df.iloc[:, 30]  # Colonne AE
+puissance_en_file_d_attente = df.iloc[:, 28]  # Colonne AC
+puissance_en_file_d_attente_hors_S3REnR = df.iloc[:, 29]  # Colonne AD
 
 
 # On ajoute les coordonnées dans un DataFrame propre
@@ -99,10 +103,19 @@ def trouver_plus_proches(x_input, y_input, n=5):
                 dispo[i],
                 travaux[i]
             ]
+            batterie = capacité_de_transfo_dispo[i] - (puissance_en_file_d_attente[i] + puissance_en_file_d_attente_hors_S3REnR[i])
+            temp.append(batterie)
             resultats.append(temp)
 
     resultats_trie = sorted(resultats, key=lambda x: x[4])
-    return resultats_trie[:n]
+    i=0
+    # Dans le cas où les 5 plus proches sont tous nuls, on va chercher le premier non nul
+    while resultats_trie[i][5]==0 and resultats_trie[i][6]==0 :
+        i=i+1
+    non_nul = resultats_trie[i]
+    if i<=4:
+        return resultats_trie[:n]
+    return resultats_trie[:n]+[non_nul]
 
 
 def trouver_min(L):
@@ -126,7 +139,8 @@ for site in résultat:
     print(f" {site[1]:}, \
           Distance: {site[4]:.2f} m, \
           Dispo: {site[5]:.2f} MW, \
-          Travaux: {site[6]:.2f} MW ")
+          Travaux: {site[6]:.2f} MW \
+          Batterie: {site[7]:.2f} MW ")
 
 
 

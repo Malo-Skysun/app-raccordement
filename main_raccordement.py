@@ -223,7 +223,7 @@ if "resultat" in st.session_state and "coords" in st.session_state:
 
     # Affichage texte
     for site in resultat:
-        st.write(f"**{site[1]}** - Distance: {site[4]:.0f} m | Dispo: {site[5]:.2f} MW | Travaux: {site[6]:.2f} MW")
+        st.write(f"**{site[1]}** - Distance: {site[4]:.0f} m | Dispo: {site[5]:.2f} MW | Travaux: {site[6]:.2f} MW | Batterie: {site[7]:.2f} MW")
 
     # Carte
     m = folium.Map(location=[lat, lon], zoom_start=13)
